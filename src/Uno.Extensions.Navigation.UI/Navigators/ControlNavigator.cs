@@ -154,10 +154,23 @@ public abstract class ControlNavigator : Navigator
 			request = request with { Route = request.Route.Trim(regionResponse?.Route) };
 		}
 
+		// Allow subclasses to adjust the request before forwarding to child regions.
+		// This is used by FrameNavigator to restore nested route state (e.g., TabBar selection)
+		// when navigating back.
+		request = AdjustRequestForChildNavigation(request);
+
 		var coreResponse = await base.CoreNavigateAsync(request);
 
 		return coreResponse ?? regionResponse;
 	}
+
+	/// <summary>
+	/// Called after the control-specific navigation is done but before the request is forwarded
+	/// to child regions. Subclasses can override this to adjust the remaining request route,
+	/// for example to restore previously cached nested route state.
+	/// </summary>
+	protected virtual NavigationRequest AdjustRequestForChildNavigation(NavigationRequest request)
+		=> request;
 
 	private async Task<NavigationResponse?> ControlCoreNavigateAsync(NavigationRequest request)
 	{
