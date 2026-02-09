@@ -1,4 +1,7 @@
-﻿namespace Uno.Extensions.Navigation;
+﻿using Uno.Extensions;
+using Uno.Logging;
+
+namespace Uno.Extensions.Navigation;
 
 public static class NavigatorExtensions
 {
@@ -18,8 +21,22 @@ public static class NavigatorExtensions
 	internal static async Task<NavigationResultResponse<TResult>?> NavigateRouteHintForResultAsync<TResult>(
 		this INavigator navigator, RouteHint routeHint, object sender, object? data, CancellationToken cancellation)
 	{
+		if (routeHint.Result is null || !typeof(TResult).IsAssignableFrom(routeHint.Result))
+		{
+			string method = $"{nameof(NavigateRouteForResultAsync)}<{typeof(TResult).FullName}>()";
+			var logger = typeof(NavigatorExtensions).Log();
+			if (routeHint.Result is null)
+			{
+				logger.Warn($"{method} called with RouteHint that does not specify a Result type.");
+			}
+			else
+			{
+				logger.Warn($"{method} called with RouteHint that specifies a Result type `{routeHint.Result.FullName}` that is not compatible with the generic type parameter `{typeof(TResult).FullName}`.");
+			}
+		}
+
 		var resolver = navigator.GetResolver();
-		var request = routeHint.ToRequest<TResult>(navigator, resolver, sender, data, cancellation);
+		var request = routeHint.ToRequest(navigator, resolver, sender, data, cancellation);
 		var result = await navigator.NavigateAsync(request);
 		return result?.AsResultResponse<TResult>();
 	}
