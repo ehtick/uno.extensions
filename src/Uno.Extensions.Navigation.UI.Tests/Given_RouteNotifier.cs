@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -67,7 +66,6 @@ public class Given_RouteNotifier
 	public async Task When_InitialNavigation_Then_RouteChanged_Has_Route()
 	{
 		// Arrange
-		RouteChangedEventArgs? receivedArgs = null;
 		var eventReceived = new TaskCompletionSource<RouteChangedEventArgs>();
 
 		var window = new Window();
@@ -97,7 +95,6 @@ public class Given_RouteNotifier
 				notifier = h.Services.GetRequiredService<IRouteNotifier>();
 				notifier.RouteChanged += (s, e) =>
 				{
-					receivedArgs = e;
 					eventReceived.TrySetResult(e);
 				};
 
@@ -161,11 +158,9 @@ public class Given_RouteNotifier
 		await navigator.NavigateRouteAsync(root, "TestPageTwo");
 
 		// Now set up listener for back navigation
-		RouteChangedEventArgs? backArgs = null;
 		var backEventReceived = new TaskCompletionSource<RouteChangedEventArgs>();
 		notifier.RouteChanged += (s, e) =>
 		{
-			backArgs = e;
 			backEventReceived.TrySetResult(e);
 		};
 
@@ -199,10 +194,8 @@ public class Given_RouteNotifier
 
 		// Act - navigate through multiple pages
 		await navigator.NavigateRouteAsync(root, "TestPageTwo");
-		await Task.Delay(100); // Allow event to fire
 
 		await navigator.NavigateRouteAsync(root, "TestPageThree");
-		await Task.Delay(100); // Allow event to fire
 
 		// Assert - each navigation should have produced a RouteChanged with a populated Route
 		await UIHelper.WaitFor(() => routeChangedArgs.Count >= 2, CancellationToken.None);
@@ -233,11 +226,9 @@ public class Given_RouteNotifier
 		// Arrange
 		var (host, navigator, notifier, root) = await SetupNavigationAsync();
 
-		RouteChangedEventArgs? receivedArgs = null;
 		var eventReceived = new TaskCompletionSource<RouteChangedEventArgs>();
 		notifier.RouteChanged += (s, e) =>
 		{
-			receivedArgs = e;
 			eventReceived.TrySetResult(e);
 		};
 
@@ -269,11 +260,9 @@ public class Given_RouteNotifier
 		// Arrange
 		var (host, navigator, notifier, root) = await SetupNavigationAsync();
 
-		RouteChangedEventArgs? receivedArgs = null;
 		var eventReceived = new TaskCompletionSource<RouteChangedEventArgs>();
 		notifier.RouteChanged += (s, e) =>
 		{
-			receivedArgs = e;
 			eventReceived.TrySetResult(e);
 		};
 
@@ -297,11 +286,9 @@ public class Given_RouteNotifier
 		// Arrange
 		var (host, navigator, notifier, root) = await SetupNavigationAsync();
 
-		RouteChangedEventArgs? receivedArgs = null;
 		var eventReceived = new TaskCompletionSource<RouteChangedEventArgs>();
 		notifier.RouteChanged += (s, e) =>
 		{
-			receivedArgs = e;
 			eventReceived.TrySetResult(e);
 		};
 

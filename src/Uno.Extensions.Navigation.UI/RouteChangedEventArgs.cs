@@ -27,6 +27,17 @@ public class RouteChangedEventArgs : EventArgs
 	/// </summary>
 	/// <param name="region">The root region where route was changed</param>
 	/// <param name="navigator">The navigator that changed the route</param>
+	[Obsolete("Use the overload that accepts a Route parameter.")]
+	public RouteChangedEventArgs(IRegion region, INavigator? navigator)
+		: this(region, navigator, route: null)
+	{
+	}
+
+	/// <summary>
+	/// Constructs a new instance
+	/// </summary>
+	/// <param name="region">The root region where route was changed</param>
+	/// <param name="navigator">The navigator that changed the route</param>
 	/// <param name="route">The current route after navigation</param>
 	public RouteChangedEventArgs(IRegion region, INavigator? navigator, Route? route)
 	{
