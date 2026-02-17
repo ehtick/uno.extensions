@@ -198,7 +198,8 @@ public class Given_RouteNotifier
 		await navigator.NavigateRouteAsync(root, "TestPageThree");
 
 		// Assert - each navigation should have produced a RouteChanged with a populated Route
-		await UIHelper.WaitFor(() => routeChangedArgs.Count >= 2, CancellationToken.None);
+		using var waitCts = new CancellationTokenSource(Timeout);
+		await UIHelper.WaitFor(() => routeChangedArgs.Count >= 2, waitCts.Token);
 
 		routeChangedArgs.Should().HaveCountGreaterOrEqualTo(2, "Each navigation should fire RouteChanged");
 
