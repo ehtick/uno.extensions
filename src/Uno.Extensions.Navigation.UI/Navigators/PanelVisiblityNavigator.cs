@@ -128,7 +128,14 @@ public class PanelVisiblityNavigator : ControlNavigator<Panel>
 			CurrentlyVisibleControl = controlToShow;
 		}
 
-		Control.ReassignRegionParent();
+		// Only reassign region parents for the currently visible control,
+		// not the entire panel. This prevents collapsed/inactive tab content 
+		// regions from being re-added as children, which would cause
+		// GetRoute() to pick the wrong (deepest) route from an inactive tab.
+		if (controlToShow is not null)
+		{
+			controlToShow.ReassignRegionParent();
+		}
 
 		return path;
 	}

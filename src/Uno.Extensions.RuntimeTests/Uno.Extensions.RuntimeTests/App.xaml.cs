@@ -1,3 +1,4 @@
+using Uno.Extensions.Navigation.UI.Tests;
 using Uno.Extensions.Reactive.WinUI.Tests;
 using Uno.Resizetizer;
 
@@ -7,6 +8,7 @@ public partial class App : Application
 	private static void ForceAssemblyLoading()
 	{
 		var reactive_UI_Tests = new Given_FeedView();
+		var navigation_UI_Tests = new Given_RouteNotifier();
 	}
 
 	/// <summary>
