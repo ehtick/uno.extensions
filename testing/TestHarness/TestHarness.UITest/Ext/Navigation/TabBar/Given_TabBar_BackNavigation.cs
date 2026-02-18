@@ -24,18 +24,18 @@ public class Given_TabBar_BackNavigation : NavigationTestBase
 
 		// Wait for the Main page to load with default tab (Second)
 		App.WaitElement("TabBarBackNavMainNavigationBar");
-		App.WaitElement("SecondSectionText");
+		App.WaitElement("SecondSection");
 		
 		// Verify default tab (Second) is selected
-		var isSecondVisible = App.Marked("SecondSectionText").IsVisible();
+		var isSecondVisible = App.Marked("SecondSection").IsVisible();
 		isSecondVisible.Should().Be(true, "Second section should be visible by default");
 
 		// Navigate to Third tab via TabBar
 		App.WaitThenTap("ThirdTabBarItem");
 		
 		// Verify Third section is now visible
-		App.WaitElement("ThirdSectionText");
-		var isThirdVisible = App.Marked("ThirdSectionText").IsVisible();
+		App.WaitElement("ThirdSection");
+		var isThirdVisible = App.Marked("ThirdSection").IsVisible();
 		isThirdVisible.Should().Be(true, "Third section should be visible after selecting tab");
 		
 		// Navigate to Sibling page
@@ -52,12 +52,12 @@ public class Given_TabBar_BackNavigation : NavigationTestBase
 		App.WaitElement("TabBarBackNavMainNavigationBar");
 		
 		// KEY ASSERTION: Third tab should still be selected (not reset to Second)
-		App.WaitElement("ThirdSectionText");
-		isThirdVisible = App.Marked("ThirdSectionText").IsVisible();
+		App.WaitElement("ThirdSection");
+		isThirdVisible = App.Marked("ThirdSection").IsVisible();
 		isThirdVisible.Should().Be(true, "Third section should still be visible after navigating back");
 		
 		// Verify Second is NOT visible (confirming we didn't reset to default)
-		isSecondVisible = App.Marked("SecondSectionText").IsVisible();
+		isSecondVisible = App.Marked("SecondSection").IsVisible();
 		isSecondVisible.Should().Be(false, "Second section should NOT be visible after navigating back");
 	}
 	
@@ -76,8 +76,8 @@ public class Given_TabBar_BackNavigation : NavigationTestBase
 		App.WaitThenTap("FourthTabBarItem");
 		
 		// Verify Fourth section is now visible
-		App.WaitElement("FourthSectionText");
-		var isFourthVisible = App.Marked("FourthSectionText").IsVisible();
+		App.WaitElement("FourthSection");
+		var isFourthVisible = App.Marked("FourthSection").IsVisible();
 		isFourthVisible.Should().Be(true, "Fourth section should be visible after selecting tab");
 		
 		// Navigate to Sibling page
@@ -93,12 +93,12 @@ public class Given_TabBar_BackNavigation : NavigationTestBase
 		App.WaitElement("TabBarBackNavMainNavigationBar");
 		
 		// KEY ASSERTION: Fourth tab should still be selected
-		App.WaitElement("FourthSectionText");
-		isFourthVisible = App.Marked("FourthSectionText").IsVisible();
+		App.WaitElement("FourthSection");
+		isFourthVisible = App.Marked("FourthSection").IsVisible();
 		isFourthVisible.Should().Be(true, "Fourth section should still be visible after navigating back");
 		
 		// Verify Second is NOT visible (confirming we didn't reset to default)
-		var isSecondVisible = App.Marked("SecondSectionText").IsVisible();
+		var isSecondVisible = App.Marked("SecondSection").IsVisible();
 		isSecondVisible.Should().Be(false, "Second section should NOT be visible after navigating back");
 	}
 }
