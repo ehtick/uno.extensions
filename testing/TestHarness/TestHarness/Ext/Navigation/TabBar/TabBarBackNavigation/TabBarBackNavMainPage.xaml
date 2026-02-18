@@ -29,23 +29,7 @@
 		<!-- Content area for tab sections -->
 		<Grid Grid.Row="2"
 			  uen:Region.Attached="True"
-			  uen:Region.Navigator="Visibility">
-			<ContentControl uen:Region.Name="Second"
-							AutomationProperties.AutomationId="SecondContent"
-							Visibility="Collapsed"
-							HorizontalContentAlignment="Stretch"
-							VerticalContentAlignment="Stretch" />
-			<ContentControl uen:Region.Name="Third"
-							AutomationProperties.AutomationId="ThirdContent"
-							Visibility="Collapsed"
-							HorizontalContentAlignment="Stretch"
-							VerticalContentAlignment="Stretch" />
-			<ContentControl uen:Region.Name="Fourth"
-							AutomationProperties.AutomationId="FourthContent"
-							Visibility="Collapsed"
-							HorizontalContentAlignment="Stretch"
-							VerticalContentAlignment="Stretch" />
-		</Grid>
+			  uen:Region.Navigator="Visibility" />
 		
 		<!-- TabBar for section navigation -->
 		<utu:TabBar x:Name="Tabs"
