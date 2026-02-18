@@ -11,6 +11,7 @@ public class TabBarBackNavHostInit : BaseHostInitialization
 	protected override void RegisterRoutes(IViewRegistry views, IRouteRegistry routes)
 	{
 		views.Register(
+			new ViewMap<TabBarBackNavShell>(),
 			new ViewMap<TabBarBackNavMainPage, TabBarBackNavMainModel>(),
 			new ViewMap<TabBarBackNavSiblingPage, TabBarBackNavSiblingModel>(),
 			new ViewMap<TabBarBackNavSecondSection>(),
@@ -19,10 +20,13 @@ public class TabBarBackNavHostInit : BaseHostInitialization
 		);
 
 		// Route structure matching the issue:
-		// - Main (with TabBar containing Second, Third, Fourth)
-		// - Sibling (separate page at same level)
+		// - Shell (root, provides a Frame for forward/back page navigation)
+		//   - Main (with TabBar containing Second, Third, Fourth)
+		//   - Sibling (separate page at same level)
+		// The shell is required so the root ContentControl renders content,
+		// which creates child regions that can process IsDefault navigation.
 		routes.Register(
-			new RouteMap("",
+			new RouteMap("", View: views.FindByView<TabBarBackNavShell>(),
 				Nested:
 				[
 					new RouteMap("Main", View: views.FindByViewModel<TabBarBackNavMainModel>(), IsDefault: true,
